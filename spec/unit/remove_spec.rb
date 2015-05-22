@@ -1,12 +1,8 @@
 require 'spec_helper'
 
-describe 'windows_autologin_test::disable' do
+describe 'windows_autologin::remove' do
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(
-      platform: 'windows',
-      version: '2012R2',
-      step_into: ['windows_autologin']
-    ).converge(described_recipe)
+    ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2').converge(described_recipe)
   end
 
   it 'disables AutoAdminLogon' do
@@ -21,9 +17,5 @@ describe 'windows_autologin_test::disable' do
       key: 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon',
       values: [{ name: 'DefaultPassword', type: :string, data: 'password', data: nil }]
     )
-  end
-
-  it 'disables autologin' do
-    expect(chef_run).to disable_windows_autologin('Administrator')
   end
 end

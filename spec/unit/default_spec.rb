@@ -1,12 +1,11 @@
 require 'spec_helper'
 
-describe 'windows_autologin_test::enable' do
+describe 'windows_autologin::default' do
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(
-      platform: 'windows',
-      version: '2012R2',
-      step_into: ['windows_autologin']
-    ).converge(described_recipe)
+    ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
+      node.set['windows_autologin']['username'] = 'Administrator'
+      node.set['windows_autologin']['password'] = 'password'
+    end.converge(described_recipe)
   end
 
   it 'sets winlogon registry values' do
@@ -19,11 +18,5 @@ describe 'windows_autologin_test::enable' do
           { name: 'DefaultDomainName', type: :string, data: nil }
         ]
       )
-  end
-
-  it 'enables autologin' do
-    expect(chef_run).to enable_windows_autologin('Administrator').with(
-      domain: nil,
-      password: 'password')
   end
 end

@@ -20,7 +20,7 @@ Also note that password is stored unencrypted under windows registry
                                                   
 ## Requirements
 
-- Chef 11.6.0 or higher (includes a built-in registry_key resource)
+- Chef 11.6.0 (includes a built-in registry_key resource) or higher 
 
 ### Platforms
 
@@ -30,21 +30,20 @@ Also note that password is stored unencrypted under windows registry
 
 Requires Administrator privileges. 
 
-Enable automatic logon
+Enable automatic login for user
 
 ```ruby
-windows_autologin 'username' do
-  password 'PassW0Rd'
-  domain nil # domain is optional
-end
+node.set['windows_autologin']['username'] = 'username'
+node.set['windows_autologin']['password'] = 'password'
+node.set['windows_autologin']['domain'] = 'domain'
+
+include_recipe[windows_autologin]
 ```
 
-Disable automatic logon
+Disable automatic login
 
 ```ruby
-windows_autologin 'username' do
-  action :disable
-end
+include_recipe[windows_autologin::remove]
 ```
 
 ## Getting Help
