@@ -1,4 +1,4 @@
-WINLOGON_KEY =  'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
+WINLOGON_KEY =  'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
 
 registry_key 'disable autologin' do
   key WINLOGON_KEY

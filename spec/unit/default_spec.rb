@@ -9,14 +9,14 @@ describe 'windows_autologin::default' do
   end
 
   it 'sets winlogon registry values' do
-    expect(chef_run).to create_registry_key(
-      'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon').with(
-        values: [
-          { name: 'AutoAdminLogon', type: :string, data: '1' },
-          { name: 'DefaultUsername', type: :string, data: 'Administrator' },
-          { name: 'DefaultPassword', type: :string, data: 'password' },
-          { name: 'DefaultDomainName', type: :string, data: nil }
-        ]
-      )
+    expect(chef_run).to create_registry_key('set autologon for Administrator').with(
+      key: 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon',
+      values: [
+        { name: 'AutoAdminLogon', type: :string, data: '1' },
+        { name: 'DefaultUsername', type: :string, data: 'Administrator' },
+        { name: 'DefaultPassword', type: :string, data: 'password' },
+        { name: 'DefaultDomainName', type: :string, data: nil }
+      ]
+    )
   end
 end

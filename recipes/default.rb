@@ -1,4 +1,5 @@
-registry_key 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' do
+registry_key "set autologon for #{node['windows_autologin']['username']}" do
+  key 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
   values [
     { name: 'AutoAdminLogon', type: :string, data: '1' },
     { name: 'DefaultUsername', type: :string, data: node['windows_autologin']['username'] },
