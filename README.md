@@ -2,11 +2,9 @@
 
 [![Cookbook Version](http://img.shields.io/cookbook/v/windows_autologin.svg?style=flat-square)][cookbook]
 [![Build Status](http://img.shields.io/travis/dhoer/chef-windows_autologin.svg?style=flat-square)][travis]
-[![GitHub Issues](http://img.shields.io/github/issues/dhoer/chef-windows_autologin.svg?style=flat-square)][github]
 
 [cookbook]: https://supermarket.chef.io/cookbooks/windows_autologin
 [travis]: https://travis-ci.org/dhoer/chef-windows_autologin
-[github]: https://github.com/dhoer/chef-windows_autologin/issues
 
 Enables/disables automatic logon using Windows 
 [AutoAdminLogon](https://technet.microsoft.com/en-us/library/cc939702.aspx).
@@ -20,7 +18,7 @@ Also note that password is stored unencrypted under windows registry
                                                   
 ## Requirements
 
-- Chef 11.6.0 (includes a built-in registry_key resource) or higher 
+- Chef 11.6+ (includes a built-in registry_key resource) 
 
 ### Platforms
 
@@ -43,12 +41,14 @@ include_recipe[windows_autologin]
 Disable automatic login
 
 ```ruby
-include_recipe[windows_autologin::remove]
+node.set['windows_autologin']['enable'] = false
+
+include_recipe[windows_autologin]
 ```
 
 ## Getting Help
 
-- Ask specific questions on [Stack Overflow](http://stackoverflow.com/questions/tagged/chef-windows_autologin).
+- Ask specific questions on [Stack Overflow](http://stackoverflow.com/questions/tagged/windows_autologin).
 - Report bugs and discuss potential features in
 [Github issues](https://github.com/dhoer/chef-windows_autologin/issues).
 
