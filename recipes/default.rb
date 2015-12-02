@@ -16,7 +16,7 @@ if node['windows_autologin']['enable']
   registry_key "set autologon for #{node['windows_autologin']['username']}" do
     key WINLOGON_KEY
     values [
-      { name: 'AutoLogonCount', type: :string, dword: node['windows_autologin']['autologoncount'] }
+      { name: 'AutoLogonCount', type: :dword, data: node['windows_autologin']['autologoncount'] }
     ]
     action :create
     not_if { node['windows_autologin']['autologoncount'].to_s == '' }
