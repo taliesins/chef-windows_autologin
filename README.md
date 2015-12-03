@@ -9,8 +9,8 @@
 Enables/disables automatic logon using Windows 
 [AutoAdminLogon](https://technet.microsoft.com/en-us/library/cc939702.aspx).
  
-Automatic logon uses the domain, username, and password stored in the registry to log users on to the computer 
-when the system starts. The Log On to Windows dialog box is not displayed.
+Automatic logon uses the domain (optional), username, and password stored in the registry to log users on to the 
+computer when the system starts. The Log On to Windows dialog box is not displayed.
 
 **WARNING:** Automatic logon allows other users to start your computer and to log on using your account. 
 Also note that password is stored unencrypted under windows registry 
@@ -31,14 +31,14 @@ Requires Administrator privileges.
 Enable automatic login for user
 
 ```ruby
+# node.set['windows_autologin']['domain'] = 'domain' # optional
 node.set['windows_autologin']['username'] = 'username'
 node.set['windows_autologin']['password'] = 'password'
-node.set['windows_autologin']['domain'] = 'domain'
 
 include_recipe[windows_autologin]
 ```
 
-Disable automatic login
+Disable automatic login and remove password entry
 
 ```ruby
 node.set['windows_autologin']['enable'] = false
