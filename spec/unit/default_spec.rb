@@ -3,10 +3,14 @@ require 'spec_helper'
 describe 'windows_autologin::default' do
   context 'enable' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
-        node.set['windows_autologin']['username'] = 'Administrator'
-        node.set['windows_autologin']['password'] = 'password'
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2', step_into: 'windows_autologin') do |node|
+        node.override['windows_autologin']['username'] = 'Administrator'
+        node.override['windows_autologin']['password'] = 'password'
       end.converge(described_recipe)
+    end
+
+    it 'calls enable resource' do
+      expect(chef_run).to enable_windows_autologin('Administrator')
     end
 
     it 'sets winlogon registry values' do
@@ -24,9 +28,15 @@ describe 'windows_autologin::default' do
 
   context 'disable' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
-        node.set['windows_autologin']['enable'] = false
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2', step_into: 'windows_autologin') do |node|
+        node.override['windows_autologin']['username'] = 'Administrator'
+        node.override['windows_autologin']['password'] = 'password'
+        node.override['windows_autologin']['enable'] = false
       end.converge(described_recipe)
+    end
+
+    it 'calls disable resource' do
+      expect(chef_run).to disable_windows_autologin('Administrator')
     end
 
     it 'disables AutoAdminLogon' do

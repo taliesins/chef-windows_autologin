@@ -31,14 +31,31 @@ Requires Administrator privileges.
 Enable automatic login for user
 
 ```ruby
-# node.set['windows_autologin']['domain'] = 'domain' # optional
 node.set['windows_autologin']['username'] = 'username'
-node.set['windows_autologin']['password'] = 'password'
+node.set['windows_autologin']['password'] = my_secret
 
 include_recipe[windows_autologin]
 ```
 
+or 
+
+```ruby
+windows_autologin 'enable autologin' do
+  username 'username'
+  password my_secret
+  action :enable
+end
+```
+
 Disable automatic login and remove password entry
+
+```ruby
+windows_autologin 'disable autologin' do
+  action :disable
+end
+```
+
+or 
 
 ```ruby
 node.set['windows_autologin']['enable'] = false
@@ -46,9 +63,16 @@ node.set['windows_autologin']['enable'] = false
 include_recipe[windows_autologin]
 ```
 
+### Attributes
+
+* `username` -  The username to autologin as. 
+Defaults to resource block name.
+* `password` - Required to enable. Default: `nil`.
+* `domain` - The domain (optional). Default `nil`.
+
 ## Getting Help
 
-- Ask specific questions on [Stack Overflow](http://stackoverflow.com/questions/tagged/windows_autologin).
+- Ask specific questions on [Stack Overflow](http://stackoverflow.com/questions/tagged/windows+autologin).
 - Report bugs and discuss potential features in
 [Github issues](https://github.com/dhoer/chef-windows_autologin/issues).
 
