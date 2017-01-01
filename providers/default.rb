@@ -9,31 +9,64 @@ WINLOGON_KEY = 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'.free
 action :enable do
   raise 'Password required!' if new_resource.password.nil?
 
-  registry_key "set autologon for #{new_resource.username}" do
+  registry_key "set AutoAdminLogon for #{new_resource.username}" do
     key WINLOGON_KEY
     values [
       { name: 'AutoAdminLogon', type: :string, data: '1' },
       { name: 'DefaultUsername', type: :string, data: new_resource.username },
-      { name: 'DefaultPassword', type: :string, data: new_resource.password },
-      { name: 'DefaultDomainName', type: :string, data: new_resource.domain }
+      { name: 'DefaultPassword', type: :string, data: new_resource.password }
     ]
     sensitive new_resource.sensitive
     action :create
   end
+
+  if new_resource.domain
+    registry_key "set DefaultDomainName for #{new_resource.username}" do
+      key WINLOGON_KEY
+      values [{ name: 'DefaultDomainName', type: :string, data: new_resource.domain }]
+      sensitive new_resource.sensitive
+      action :create
+    end
+  else
+    registry_key "delete DefaultDomainName for #{new_resource.username}" do
+      key WINLOGON_KEY
+      values [{ name: 'DefaultDomainName', type: :string, data: nil }]
+      action :delete
+    end
+  end
+
+  if new_resource.count > 0
+    registry_key "set AutoLogonCount for #{new_resource.username}" do
+      key WINLOGON_KEY
+      values [{ name: 'AutoLogonCount', type: :dword, data: new_resource.count }]
+      sensitive new_resource.sensitive
+      action :create
+    end
+  else
+    registry_key "delete AutoLogonCount for #{new_resource.username}" do
+      key WINLOGON_KEY
+      values [{ name: 'AutoLogonCount', type: :dword, data: nil }]
+      action :delete
+    end
+  end
 end
 
 action :disable do
-  registry_key 'disable autologin' do
+  registry_key 'disable AutoAdminLogon' do
     key WINLOGON_KEY
     values [{ name: 'AutoAdminLogon', type: :string, data: '0' }]
-    sensitive new_resource.sensitive
     action :create
   end
 
-  registry_key 'delete autologin password' do
+  registry_key "delete DefaultPassword for #{new_resource.username}" do
     key WINLOGON_KEY
     values [{ name: 'DefaultPassword', type: :string, data: nil }]
-    sensitive new_resource.sensitive
+    action :delete
+  end
+
+  registry_key "delete AutoLogonCount for #{new_resource.username}" do
+    key WINLOGON_KEY
+    values [{ name: 'AutoLogonCount', type: :dword, data: nil }]
     action :delete
   end
 end

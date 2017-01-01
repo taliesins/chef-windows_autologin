@@ -9,12 +9,18 @@
 Enables/disables automatic logon using Windows 
 [AutoAdminLogon](https://technet.microsoft.com/en-us/library/cc939702.aspx).
  
-Automatic logon uses the domain (optional), username, and password stored in the registry to log users on to the 
-computer when the system starts. The Log On to Windows dialog box is not displayed.
+Automatic logon uses the domain (optional), username, and password 
+stored in the registry to log users on to the computer when the system 
+starts. The Log On to Windows dialog box is not displayed.
 
-**WARNING:** Automatic logon allows other users to start your computer and to log on using your account. 
-Also note that password is stored unencrypted under windows registry 
-`HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon` when enabled.   
+Use count to limit the Number of Automatic Logins. Once the limit has 
+been reached the auto logon feature will be disabled. 
+
+**WARNING:** Automatic logon allows other users to start your computer 
+and to log on using your account. Also note that password is stored 
+unencrypted under windows registry 
+`HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon` when 
+enabled.   
                                                   
 ## Requirements
 
@@ -33,6 +39,7 @@ Enable automatic login for user
 ```ruby
 node.set['windows_autologin']['username'] = 'username'
 node.set['windows_autologin']['password'] = my_secret
+node.set['windows_autologin']['autologoncount'] = 1
 
 include_recipe[windows_autologin]
 ```
@@ -43,11 +50,12 @@ or
 windows_autologin 'enable autologin' do
   username 'username'
   password my_secret
+  count 1
   action :enable
 end
 ```
 
-Disable automatic login and remove password entry
+Disable automatic login and remove password and count entry
 
 ```ruby
 windows_autologin 'disable autologin' do
@@ -65,10 +73,13 @@ include_recipe[windows_autologin]
 
 ### Attributes
 
-* `username` -  The username to autologin as. 
-Defaults to resource block name.
+* `username` -  The username to autologin as. Defaults to resource 
+block name.
 * `password` - Required to enable. Default: `nil`.
-* `domain` - The domain (optional). Default `nil`.
+* `domain` - Only needed if computer has joined a domain. 
+Default: `nil`.
+* `count` - Number of Automatic Logins. Once the limit has been reached 
+the auto logon feature will be disabled. Default: `nil`.
 
 ## Getting Help
 

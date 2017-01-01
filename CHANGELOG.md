@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 2016-01-01
+
+- Add AutoLogonCount support 
+
 ## 2.1.0 2016-12-31
 
 - Add enable/disable resource
