@@ -1,10 +1,10 @@
 # Windows Autologin Cookbook
 
 [![Cookbook Version](http://img.shields.io/cookbook/v/windows_autologin.svg?style=flat-square)][cookbook]
-[![Build Status](http://img.shields.io/travis/dhoer/chef-windows_autologin.svg?style=flat-square)][travis]
+[![Build Status](https://img.shields.io/appveyor/ci/dhoer/chef-windows-autologin/master.svg?style=flat-square)][win]
 
 [cookbook]: https://supermarket.chef.io/cookbooks/windows_autologin
-[travis]: https://travis-ci.org/dhoer/chef-windows_autologin
+[win]: https://ci.appveyor.com/project/dhoer/chef-windows-autologin
 
 Enables/disables automatic logon using Windows 
 [AutoAdminLogon](https://technet.microsoft.com/en-us/library/cc939702.aspx).
@@ -79,7 +79,7 @@ block name.
 * `domain` - Only needed if computer has joined a domain. 
 Default: `nil`.
 * `count` - Number of Automatic Logins. Once the limit has been reached 
-the auto logon feature will be disabled. Default: `nil`.
+the auto logon feature will be disabled. Default: `0`.
 
 ## Getting Help
 
