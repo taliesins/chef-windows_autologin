@@ -53,6 +53,11 @@ windows_autologin 'username' do
 end
 ```
 
+### Actions
+
+- `enable` - Enables autologin.
+- `disable` - Disables autologin.
+
 ### Attributes
 
 * `username` -  The username to autologin as. Defaults to resource 
