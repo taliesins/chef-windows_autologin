@@ -53,7 +53,6 @@ windows_autologin 'username' do
 end
 ```
 
-
 ### Attributes
 
 * `username` -  The username to autologin as. Defaults to resource 
@@ -61,6 +60,24 @@ block name. Note that username can include domain.
 * `password` - Required to enable. Default: `nil`.
 * `count` - Number of Automatic Logins. Once the limit has been reached 
 the auto logon feature will be disabled. Default: `0`.
+
+## ChefSpec Matchers
+
+This cookbook includes custom [ChefSpec](https://github.com/sethvargo/chefspec) matchers you can use to test 
+your own cookbooks.
+
+Example Matcher Usage
+
+```ruby
+expect(chef_run).to enable_windows_autologin('username').with(
+  password: 'password'
+)
+```
+      
+Selenium Cookbook Matchers
+
+- enable_windows_autologin(resource_name)
+- disable_windows_autologin(resource_name)
 
 ## Getting Help
 
