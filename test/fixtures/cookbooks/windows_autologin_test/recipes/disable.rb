@@ -1,3 +1,3 @@
-windows_autologin 'Administrator' do
+windows_autologin 'test_user' do
   action :disable
 end
