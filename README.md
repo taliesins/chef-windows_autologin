@@ -48,7 +48,7 @@ end
 Disable automatic login and remove password and count entry
 
 ```ruby
-windows_autologin 'disable autologin' do
+windows_autologin 'username' do
   action :disable
 end
 ```
