@@ -1,3 +1,3 @@
-windows_autologin 'test_user' do
+windows_autologin node['windows_autologin_test']['username'] do
   action :disable
 end

@@ -16,6 +16,6 @@ suites:
     run_list:
       - recipe[windows_autologin]
     attributes:
-      windows_autologin:
+      windows_autologin_test:
         username: vagrant
         password: vagrant

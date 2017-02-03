@@ -19,6 +19,6 @@ suites:
     run_list:
       - recipe[windows_autologin]
     attributes:
-      windows_autologin:
+      windows_autologin_test:
         username: <%= ENV["machine_user"] %>
         password: <%= ENV["machine_pass"] %>
