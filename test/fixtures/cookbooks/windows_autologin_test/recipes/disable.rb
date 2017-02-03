@@ -1,3 +1,3 @@
-windows_autologin node['windows_autologin_test']['username'] do
+windows_autologin 'disable autologin' do
   action :disable
 end
