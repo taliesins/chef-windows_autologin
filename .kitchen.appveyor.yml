@@ -17,7 +17,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[windows_autologin]
+      - recipe[windows_autologin_test]
     attributes:
       windows_autologin_test:
         username: <%= ENV["machine_user"] %>
