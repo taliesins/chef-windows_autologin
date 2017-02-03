@@ -9,18 +9,19 @@
 Enables/disables automatic logon using Windows 
 [AutoAdminLogon](https://technet.microsoft.com/en-us/library/cc939702.aspx).
  
-Automatic logon uses the domain (optional), username, and password 
-stored in the registry to log users on to the computer when the system 
-starts. The Log On to Windows dialog box is not displayed.
+Automatic logon uses username (domain can be included, e.g., 
+domain\username) and password stored in the registry to log users on 
+to the computer when the system starts. The Log On to Windows dialog 
+box is not displayed.
 
 Use count to limit the Number of Automatic Logins. Once the limit has 
 been reached the auto logon feature will be disabled. 
 
 **WARNING:** Automatic logon allows other users to start your computer 
-and to log on using your account. Also note that password is stored 
+and to log on using your account, password is stored 
 unencrypted under windows registry 
 `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon` when 
-enabled.   
+enabled, and Chef outputs the password when updating autologin registry.   
                                                   
 ## Requirements
 
@@ -37,20 +38,9 @@ Requires Administrator privileges.
 Enable automatic login for user
 
 ```ruby
-node.set['windows_autologin']['username'] = 'username'
-node.set['windows_autologin']['password'] = my_secret
-node.set['windows_autologin']['autologoncount'] = 1
-
-include_recipe[windows_autologin]
-```
-
-or 
-
-```ruby
 windows_autologin 'enable autologin' do
   username 'username'
   password my_secret
-  count 1
   action :enable
 end
 ```
@@ -63,21 +53,12 @@ windows_autologin 'disable autologin' do
 end
 ```
 
-or 
-
-```ruby
-node.set['windows_autologin']['enable'] = false
-
-include_recipe[windows_autologin]
-```
 
 ### Attributes
 
 * `username` -  The username to autologin as. Defaults to resource 
-block name.
+block name. Note that username can include domain.
 * `password` - Required to enable. Default: `nil`.
-* `domain` - Only needed if computer has joined a domain. 
-Default: `nil`.
 * `count` - Number of Automatic Logins. Once the limit has been reached 
 the auto logon feature will be disabled. Default: `0`.
 
