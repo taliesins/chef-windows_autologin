@@ -1,6 +1,11 @@
 # Changelog
 
-## 2.2.0 2016-01-01
+## 3.0.0 2017-02-03
+
+- Remove default recipe 
+- Merge domain attribute into username
+
+## 2.2.0 2017-01-01
 
 - Add AutoLogonCount support 
 

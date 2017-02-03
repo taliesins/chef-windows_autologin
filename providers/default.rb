@@ -6,6 +6,14 @@ end
 
 WINLOGON_KEY = 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'.freeze
 
+def windows_domain(username)
+  '\\'.include?(username) ? username.split('\\').first : nil
+end
+
+def windows_user(username)
+  '\\'.include?(username) ? username.split('\\').last : username
+end
+
 action :enable do
   raise 'Password required!' if new_resource.password.nil?
 
@@ -13,26 +21,12 @@ action :enable do
     key WINLOGON_KEY
     values [
       { name: 'AutoAdminLogon', type: :string, data: '1' },
-      { name: 'DefaultUsername', type: :string, data: new_resource.username },
-      { name: 'DefaultPassword', type: :string, data: new_resource.password }
+      { name: 'DefaultUsername', type: :string, data: windows_user(new_resource.username) },
+      { name: 'DefaultPassword', type: :string, data: new_resource.password },
+      { name: 'DefaultDomainName', type: :string, data: windows_domain(new_resource.username) }
     ]
     sensitive new_resource.sensitive
     action :create
-  end
-
-  if new_resource.domain
-    registry_key "set DefaultDomainName for #{new_resource.username}" do
-      key WINLOGON_KEY
-      values [{ name: 'DefaultDomainName', type: :string, data: new_resource.domain }]
-      sensitive new_resource.sensitive
-      action :create
-    end
-  else
-    registry_key "delete DefaultDomainName for #{new_resource.username}" do
-      key WINLOGON_KEY
-      values [{ name: 'DefaultDomainName', type: :string, data: nil }]
-      action :delete
-    end
   end
 
   if new_resource.count > 0
