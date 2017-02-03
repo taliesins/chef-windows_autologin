@@ -79,7 +79,7 @@ expect(chef_run).to enable_windows_autologin('username').with(
 )
 ```
       
-Selenium Cookbook Matchers
+Cookbook Matchers
 
 - enable_windows_autologin(resource_name)
 - disable_windows_autologin(resource_name)
