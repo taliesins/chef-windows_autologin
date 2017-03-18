@@ -65,6 +65,8 @@ block name. Note that username can include domain.
 * `password` - Required to enable. Default: `nil`.
 * `count` - Number of Automatic Logins. Once the limit has been reached 
 the auto logon feature will be disabled. Default: `0`.
+* `confidential` - Ensure that sensitive resource data is not logged by 
+the chef-client. Default: `true`.
 
 ## ChefSpec Matchers
 

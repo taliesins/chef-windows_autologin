@@ -25,7 +25,7 @@ action :enable do
       { name: 'DefaultPassword', type: :string, data: new_resource.password },
       { name: 'DefaultDomainName', type: :string, data: windows_domain(new_resource.username) }
     ]
-    sensitive new_resource.sensitive
+    sensitive new_resource.confidential
     action :create
   end
 
@@ -33,7 +33,7 @@ action :enable do
     registry_key "set AutoLogonCount for #{new_resource.username}" do
       key WINLOGON_KEY
       values [{ name: 'AutoLogonCount', type: :dword, data: new_resource.count }]
-      sensitive new_resource.sensitive
+      sensitive new_resource.confidential
       action :create
     end
   else

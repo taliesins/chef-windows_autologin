@@ -4,7 +4,7 @@ maintainer_email 'dennis.hoer@gmail.com'
 license 'MIT'
 description 'Configures Winlogon'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '3.0.0'
+version '4.0.0'
 
 supports 'windows'
 
